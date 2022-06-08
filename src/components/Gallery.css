@@ -1,0 +1,9 @@
+.Gallery {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-content: space-evenly;
+    flex-wrap: wrap;
+
+    /*background-color: #282c34;*/
+}
