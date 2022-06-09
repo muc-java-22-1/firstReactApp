@@ -54,7 +54,7 @@ export default function Gallery () {
                 {mode === "page mode"
                     ?
                     <div>
-                        <button onClick={() => fetchAll()}>fetch all</button>
+                        <button id="fetchall" onClick={() => fetchAll()}>fetch all</button>
 
                         {
                             ramCharacters && ramCharacters.length > 0 && (ramApiMeta?.prev || ramApiMeta?.next) &&

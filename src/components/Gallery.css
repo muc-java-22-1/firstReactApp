@@ -18,6 +18,10 @@
     margin: 15px;
 }
 
+#fetchall {
+    margin-right: 15px;
+}
+
 .pagination-buttons span {
     color: azure;
     font-weight: bold;
