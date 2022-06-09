@@ -14,6 +14,8 @@ export default function GalleryItem (props: GalleryItemProps) {
                         Status: {props.character.status}
                         <br/>
                         Species: {props.character.species}
+                        <br/>
+                        id: {props.character.id}
                     </p>
                     <img src={props.character.image}  alt="Character"/>
                 </div>
