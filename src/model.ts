@@ -3,6 +3,7 @@ export interface Character {
     status: string;
     species: string;
     image: string;
+    id: number;
 }
 
 

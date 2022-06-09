@@ -18,6 +18,16 @@
     margin: 15px;
 }
 
+.pagination-buttons span {
+    color: azure;
+    font-weight: bold;
+}
+
 div h1 {
     color: azure;
+}
+
+.invisible {
+    /*display: none;*/
+    visibility: hidden;
 }

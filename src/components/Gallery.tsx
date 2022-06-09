@@ -7,7 +7,7 @@ import {Character, RamApi, RamApiInfo} from "../model";
 export default function Gallery () {
 
     const [searchName, setSearchName] = useState('');
-    const [ramCharacters, setRamCharacters] = useState<Character[]>();
+    const [ramCharacters, setRamCharacters] = useState<Character[]>([]);
     const [ramApiMeta, setRamApiMeta] = useState<RamApiInfo>();
 
     useEffect(() => {
@@ -33,19 +33,30 @@ export default function Gallery () {
             </div>
             <div className="pagination-buttons">
                 {
-                    ramApiMeta && ramApiMeta.prev &&
+                    ramCharacters && ramCharacters.length>0 &&
+                    <span>Page: {Math.ceil(ramCharacters!.at(0)!.id/20)}   </span>
+                }
+
+                {
+                    ramApiMeta?.prev
+                    ?
                     <button onClick={() => getRaMCharacterData(ramApiMeta.prev)}>prev</button>
+                        :
+                        <button className="invisible" >prev</button>
                 }
                 {
-                    ramApiMeta && ramApiMeta.next &&
+                    ramApiMeta?.next
+                    ?
                     <button onClick={() => getRaMCharacterData(ramApiMeta.next)}>next</button>
+                        :
+                        <button className="invisible" >next</button>
                 }
             </div>
             <div className="Gallery">
-                {ramCharacters &&
+                {
                     ramCharacters
                         .filter(c => c.name.toLowerCase().includes(searchName.toLowerCase()))
-                        .map(c => <GalleryItem character={c}/>)
+                        .map(c => <GalleryItem key = {c.id} character={c}/>)
                 }
             </div>
         </div>
