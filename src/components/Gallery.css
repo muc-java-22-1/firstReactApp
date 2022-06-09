@@ -5,5 +5,15 @@
     align-content: space-evenly;
     flex-wrap: wrap;
 
+    margin-top: 20px;
+
     /*background-color: #282c34;*/
+}
+
+.search {
+    color: azure;
+}
+
+div h1 {
+    color: azure;
 }

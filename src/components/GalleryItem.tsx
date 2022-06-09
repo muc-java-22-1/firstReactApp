@@ -1,23 +1,21 @@
 import "./GalleryItem.css";
+import {Character} from "../model";
 
 interface GalleryItemProps {
-    name: string;
-    status: string;
-    species: string;
-    image_url: string;
+    character: Character
 }
 
 export default function GalleryItem (props: GalleryItemProps) {
     return (
             <div className="CharacterFlexbox">
                 <div>
-                    <h2>{props.name}</h2>
+                    <h2>{props.character.name}</h2>
                     <p>
-                        Status: {props.status}
+                        Status: {props.character.status}
                         <br/>
-                        Species: {props.species}
+                        Species: {props.character.species}
                     </p>
-                    <img src={props.image_url}  alt="Character"/>
+                    <img src={props.character.image_url}  alt="Character"/>
                 </div>
             </div>
     )
