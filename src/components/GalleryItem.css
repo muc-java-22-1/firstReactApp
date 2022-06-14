@@ -3,16 +3,14 @@
     margin: 10px;
     background-color: #61dafb;
 }
+.CharacterFlexbox h2 {
+}
 .CharacterFlexbox p {
     background-color: antiquewhite;
 }
 
 .CharacterFlexbox img {
     width: 90%;
+    max-width: 150px;
     margin: 10px;
-}
-
-.CharacterFlexbox div {
-    /*width: 98%;*/
-    /*height: 98%;*/
 }

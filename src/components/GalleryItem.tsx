@@ -7,7 +7,7 @@ interface GalleryItemProps {
 
 export default function GalleryItem (props: GalleryItemProps) {
     return (
-            <div className="CharacterFlexbox">
+            <div data-testid={props.character.id} className="CharacterFlexbox">
                 <div>
                     <h2>{props.character.name}</h2>
                     <p>

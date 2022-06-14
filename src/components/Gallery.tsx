@@ -3,6 +3,7 @@ import {useEffect, useState} from "react";
 import GalleryItem from "./GalleryItem";
 import "./Gallery.css"
 import {Character, RamApi, RamApiInfo} from "../model";
+import {wait} from "@testing-library/user-event/dist/utils";
 
 export default function Gallery () {
 
@@ -11,21 +12,40 @@ export default function Gallery () {
     const [ramApiMeta, setRamApiMeta] = useState<RamApiInfo>();
     const [mode, setMode] = useState("page mode");
 
+    const [errorMsg, setErrorMsg] = useState<string>("");
+
     useEffect(() => {
-        getRaMCharacterData("https://rickandmortyapi.com/api/character")
+        getRaMCharacterData(startUrl);
     }, []);
 
+    useEffect(() => {
+        setTimeout(()=>setErrorMsg(""), 5000)
+    }, [errorMsg]);
+
+    // const startUrl: string = "https://rickandmortyapi.com/api/character/error";
+    const startUrl: string = "https://rickandmortyapi.com/api/character";
 
     const fetchAll = () => {
-        fetchRec("https://rickandmortyapi.com/api/character").then((characters) => setRamCharacters(characters));
+        fetchRec(startUrl).then((characters) => setRamCharacters(characters));
         setMode("all chars mode")
     }
+
+    const fetchAllIter = () => {
+
+    }
+
+    const  fetchIter = async () => {
+
+    }
+
     const fetchRec: (nextUrl: string) => Promise<Character[]> = (nextUrl: string) => {
         console.log(`fetch rec: ${nextUrl}`);
         return fetch(nextUrl)
             .then(response => response.json())
             .then(async (ramApi: RamApi) => {
                 if (ramApi?.info?.next) {
+                    // await new Promise((resolve, _) => setTimeout(() => resolve({}), 250));
+                    // await wait(50);
                     return ramApi.results.concat(await fetchRec(ramApi.info.next));
                 }
                 return ramApi.results;
@@ -36,18 +56,29 @@ export default function Gallery () {
         setMode("page mode");
         console.log(`fetch: ${url}`);
         fetch(url)
-            .then(response => response.json())
+            .then(response => {
+                if(response.status === 200){
+                     return response.json()
+                }
+                throw new Error("return not 200");
+            })
             .then((ramApi: RamApi) => {
                 setRamCharacters(ramApi.results);
                 setRamApiMeta(ramApi.info);
-            });
+                console.log(ramApi);
+            }).catch(
+            (e) => {
+                setErrorMsg(e.toString());
+                console.error(e);
+            }
+        );
     }
 
     return (
-        <div>
+        <div data-testid="gallery">
             <h1>Rick and Morty character gallery</h1>
             <div className="search">
-                <label htmlFor="nameInput">Search for name: </label><input id="nameInput" type="text" value={searchName}
+                <label htmlFor="nameInput">Search for name: </label><input data-testid='search-field' id="nameInput" type="text" value={searchName}
                                                                            onChange={ev => setSearchName(ev.target.value)}/>
             </div>
             <div className="pagination-buttons">
@@ -71,14 +102,17 @@ export default function Gallery () {
                         {
                             ramApiMeta?.next
                                 ?
-                                <button onClick={() => getRaMCharacterData(ramApiMeta.next)}>next</button>
+                                <button onClick={() => getRaMCharacterData("asdf" + ramApiMeta.next)}>next</button>
                                 :
                                 <button className="invisible">next</button>
                         }
                     </div>
                     :
-                    <button onClick={() => getRaMCharacterData("https://rickandmortyapi.com/api/character")}>load first page</button>
+                    <button onClick={() => getRaMCharacterData(startUrl)}>load first page</button>
                 }
+            </div>
+            <div className="errormsg">
+                {errorMsg}
             </div>
             <div className="Gallery">
                 {
