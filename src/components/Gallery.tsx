@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import GalleryItem from "./GalleryItem";
 import "./Gallery.css"
 import {Character, RamApi, RamApiInfo} from "../model";
-import {wait} from "@testing-library/user-event/dist/utils";
 
 export default function Gallery () {
 
@@ -11,6 +10,7 @@ export default function Gallery () {
     const [ramCharacters, setRamCharacters] = useState<Character[]>([]);
     const [ramApiMeta, setRamApiMeta] = useState<RamApiInfo>();
     const [mode, setMode] = useState("page mode");
+    const [searchError, setSearchError] = useState('')
 
     const [errorMsg, setErrorMsg] = useState<string>("");
 
@@ -22,7 +22,11 @@ export default function Gallery () {
         setTimeout(()=>setErrorMsg(""), 5000)
     }, [errorMsg]);
 
-    // const startUrl: string = "https://rickandmortyapi.com/api/character/error";
+
+    useEffect(() => {
+        setTimeout(()=>setSearchError(""), 5000)
+    }, [searchError]);
+
     const startUrl: string = "https://rickandmortyapi.com/api/character";
 
     const fetchAll = () => {
@@ -74,12 +78,24 @@ export default function Gallery () {
         );
     }
 
+    const setSearchWord = (searchWord: string) => {
+        if(searchWord.length>10){
+            setSearchError("Searching term cannot be longer than 10 signs");
+            return;
+        }
+        setSearchName(searchWord);
+        setSearchError("");
+    }
+
     return (
         <div data-testid="gallery">
             <h1>Rick and Morty character gallery</h1>
             <div className="search">
                 <label htmlFor="nameInput">Search for name: </label><input data-testid='search-field' id="nameInput" type="text" value={searchName}
-                                                                           onChange={ev => setSearchName(ev.target.value)}/>
+                                                                           onChange={ev => setSearchWord(ev.target.value)}/>
+            </div>
+            <div className="errormsg">
+                {searchError}
             </div>
             <div className="pagination-buttons">
                 {mode === "page mode"
