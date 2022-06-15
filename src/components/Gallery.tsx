@@ -7,26 +7,31 @@ import {wait} from "@testing-library/user-event/dist/utils";
 
 export default function Gallery () {
 
+    const firstCharacterPageUrl: string = "https://rickandmortyapi.com/api/character";
+
     const [searchName, setSearchName] = useState('');
     const [ramCharacters, setRamCharacters] = useState<Character[]>([]);
     const [ramApiMeta, setRamApiMeta] = useState<RamApiInfo>();
     const [mode, setMode] = useState("page mode");
 
+    const [actualUrl, setActualUrl] = useState<string>(localStorage.getItem("actualcharacterpage")??firstCharacterPageUrl);
+
     const [errorMsg, setErrorMsg] = useState<string>("");
 
     useEffect(() => {
-        getRaMCharacterData(startUrl);
+        getCharactersFromPageUrl(actualUrl);
     }, []);
+
+    useEffect(()=>{
+        localStorage.setItem("actualcharacterpage", actualUrl);
+    }, [actualUrl])
 
     useEffect(() => {
         setTimeout(()=>setErrorMsg(""), 5000)
     }, [errorMsg]);
 
-    // const startUrl: string = "https://rickandmortyapi.com/api/character/error";
-    const startUrl: string = "https://rickandmortyapi.com/api/character";
-
     const fetchAll = () => {
-        fetchRec(startUrl).then((characters) => setRamCharacters(characters));
+        fetchRec(firstCharacterPageUrl).then((characters) => setRamCharacters(characters));
         setMode("all chars mode")
     }
 
@@ -52,7 +57,7 @@ export default function Gallery () {
             });
     }
 
-    const getRaMCharacterData = (url: string) => {
+    const getCharactersFromPageUrl = (url: string) => {
         setMode("page mode");
         console.log(`fetch: ${url}`);
         fetch(url)
@@ -65,6 +70,7 @@ export default function Gallery () {
             .then((ramApi: RamApi) => {
                 setRamCharacters(ramApi.results);
                 setRamApiMeta(ramApi.info);
+                setActualUrl(url);
                 console.log(ramApi);
             }).catch(
             (e) => {
@@ -95,20 +101,20 @@ export default function Gallery () {
                         {
                             ramApiMeta?.prev
                                 ?
-                                <button onClick={() => getRaMCharacterData(ramApiMeta.prev)}>prev</button>
+                                <button onClick={() => getCharactersFromPageUrl(ramApiMeta.prev)}>prev</button>
                                 :
                                 <button className="invisible">prev</button>
                         }
                         {
                             ramApiMeta?.next
                                 ?
-                                <button onClick={() => getRaMCharacterData("asdf" + ramApiMeta.next)}>next</button>
+                                <button onClick={() => getCharactersFromPageUrl(ramApiMeta.next)}>next</button>
                                 :
                                 <button className="invisible">next</button>
                         }
                     </div>
                     :
-                    <button onClick={() => getRaMCharacterData(startUrl)}>load first page</button>
+                    <button onClick={() => getCharactersFromPageUrl(firstCharacterPageUrl)}>load first page</button>
                 }
             </div>
             <div className="errormsg">
