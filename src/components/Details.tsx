@@ -1,4 +1,4 @@
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import axios, {AxiosResponse} from "axios";
 import {useEffect, useState} from "react";
 import {CharacterDetails} from "../model";
@@ -35,11 +35,14 @@ export default function Details() {
                         id: {characterDetails.id}
                     </p>
                     <img src={characterDetails.image} alt="Character"/>
-                    <h3>Episodes: </h3>
-                    {
-                        characterDetails.episode.map((e)=><div>{e}</div>)
-                    }
                 </div>
+            }
+            <h3>Episodes: </h3>
+            {
+                characterDetails &&
+                characterDetails.episode.map((e) =>
+                     <Link to={`/episode/${e.split("/").pop()}`}>{e.split("/").pop()}</Link>
+                )
             }
         </div>
     )
