@@ -2,6 +2,7 @@ import {useParams} from "react-router-dom";
 import axios, {AxiosResponse} from "axios";
 import {useEffect, useState} from "react";
 import {CharacterDetails} from "../model";
+import "./Details.css";
 
 export default function Details() {
 
@@ -20,7 +21,7 @@ export default function Details() {
     }
 
     return(
-        <div>
+        <div className="detailspage">
             Details page for {params.charId}
             {
                 characterDetails &&

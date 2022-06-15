@@ -22,7 +22,9 @@ export default function GalleryItem(props: GalleryItemProps) {
                     <br/>
                     id: {props.character.id}
                 </p>
-                <img src={props.character.image} alt="Character"/>
+                <div className="characterimage">
+                    <img src={props.character.image} alt="Character"/>
+                </div>
             </div>
         </div>
     )

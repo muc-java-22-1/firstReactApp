@@ -9,8 +9,12 @@
     background-color: antiquewhite;
 }
 
-.CharacterFlexbox img {
-    width: 90%;
-    max-width: 150px;
+.characterimage {
     margin: 10px;
 }
+
+/*.CharacterFlexbox img {*/
+/*    width: 90%;*/
+/*    !*max-width: 150px;*!*/
+/*    margin: 10px;*/
+/*}*/
