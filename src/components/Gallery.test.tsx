@@ -13,9 +13,13 @@ test('Rick and Morty filtering', async () => {
     render(<Gallery />);
 
     await waitFor(() => {
-            expect(screen.getByTestId(1)).toBeDefined();
-            expect(screen.getByTestId(2)).toBeDefined();
-            expect(screen.getByTestId(2)).toBeDefined();
+        expect(screen.getByTestId("Character1")).toBeDefined();
+    });
+    await waitFor(() => {
+        expect(screen.getByTestId("Character2")).toBeDefined();
+    });
+    await waitFor(() => {
+        expect(screen.getByTestId("Character3")).toBeDefined();
     });
 
     await waitFor(() => {
@@ -28,12 +32,16 @@ test('Rick and Morty filtering', async () => {
 
 
     await waitFor(() => {
-        expect(screen.getByTestId("gallery")).toHaveTextContent("Rick Sanchez");
+        expect(screen.getByTestId("gallery")).toHaveTextContent("Morty Smith");
     });
     await waitFor(() => {
-        expect(()=>screen.getByTestId(1)).toThrowError();
-        expect(screen.getByTestId(2)).toBeDefined();
-        expect(screen.getByTestId(2)).toBeDefined();
+        expect(() => screen.getByTestId("Character1")).toThrowError();
+    });
+    await waitFor(() => {
+        expect(screen.getByTestId("Character2")).toBeDefined();
+    });
+    await waitFor(() => {
+        expect(screen.getByTestId("Character3")).toBeDefined();
     });
 });
 

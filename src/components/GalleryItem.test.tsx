@@ -12,7 +12,7 @@ test('GalleryItem is rendered correctly', ()=>{
         id: 1};
     render(<GalleryItem character={char}/>);
 
-    const dummyChar = screen.getByTestId(char.id);
+    const dummyChar = screen.getByTestId("Character" + char.id);
 
     expect(dummyChar).toHaveTextContent(char.name);
     expect(dummyChar).toHaveTextContent(`Status: ${char.status}`);
