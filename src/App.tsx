@@ -1,12 +1,21 @@
 import React from 'react';
 import './App.css';
 import Gallery from "./components/Gallery";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Details from "./components/Details";
 
 function App() {
   return (
-    <div className="App">
-      <Gallery />
-    </div>
+
+      <BrowserRouter>
+          <Routes>
+              <Route path="/" element={<Gallery />} />
+              <Route path="/details/:charId" element={<Details />} />
+          </Routes>
+      </BrowserRouter>
+    // <div className="App">
+    //   <Gallery />
+    // </div>
   );
 }
 

@@ -3,7 +3,6 @@ import {useEffect, useState} from "react";
 import GalleryItem from "./GalleryItem";
 import "./Gallery.css"
 import {Character, RamApi, RamApiInfo} from "../model";
-import {wait} from "@testing-library/user-event/dist/utils";
 
 export default function Gallery () {
 
@@ -22,7 +21,6 @@ export default function Gallery () {
         setTimeout(()=>setErrorMsg(""), 5000)
     }, [errorMsg]);
 
-    // const startUrl: string = "https://rickandmortyapi.com/api/character/error";
     const startUrl: string = "https://rickandmortyapi.com/api/character";
 
     const fetchAll = () => {
