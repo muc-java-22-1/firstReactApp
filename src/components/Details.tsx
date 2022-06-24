@@ -12,7 +12,8 @@ export default function Details() {
         fetchCharacter(params.charId!)
             .then((response: AxiosResponse<CharacterDetails, any>) => {
                 setCharacterDetails(response.data)
-            })
+            });
+        localStorage.clear();
     }, [])
     const params = useParams();
 
